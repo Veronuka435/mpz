@@ -1,17 +1,8 @@
-use crate::{Evaluate, Provide, Role, ShareConversionError};
+use crate::ShareConversionError;
 use async_trait::async_trait;
 use mpz_common::Context;
 use mpz_fields::Field;
 use mpz_ole::{OLEeEvaluate, OLEeProvide};
-
-#[async_trait]
-pub trait M2A<C: Context, F: Field, R: Role> {
-    async fn convert(
-        &mut self,
-        ctx: &mut C,
-        shares: Vec<F>,
-    ) -> Result<Vec<F>, ShareConversionError>;
-}
 
 #[async_trait]
 impl<C: Context, F: Field, T: OLEeProvide<C, F> + Send> M2A<C, F, Provide> for T {
