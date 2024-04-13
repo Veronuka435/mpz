@@ -1,3 +1,12 @@
+#![deny(
+    unsafe_code,
+    missing_docs,
+    unused_imports,
+    unused_must_use,
+    unreachable_pub,
+    clippy::all
+)]
+
 use async_trait::async_trait;
 use mpz_common::Context;
 use mpz_fields::Field;
