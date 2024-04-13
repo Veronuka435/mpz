@@ -1,12 +1,3 @@
-#![deny(
-    unsafe_code,
-    missing_docs,
-    unused_imports,
-    unused_must_use,
-    unreachable_pub,
-    clippy::all
-)]
-
 use async_trait::async_trait;
 use mpz_common::Context;
 use mpz_fields::Field;
@@ -15,6 +6,8 @@ use thiserror::Error;
 
 mod a2m;
 mod m2a;
+
+pub use m2a::{M2AEvaluator, M2AProvider};
 
 #[async_trait]
 pub trait A2M<C: Context, F: Field> {

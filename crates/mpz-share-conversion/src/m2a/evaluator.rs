@@ -12,6 +12,16 @@ pub struct M2AEvaluator<C: Context, F: Field, T: OLEeEvaluate<C, F>> {
     context: PhantomData<C>,
 }
 
+impl<C: Context, F: Field, T: OLEeEvaluate<C, F>> M2AEvaluator<C, F, T> {
+    pub fn new(evaluator: T) -> Self {
+        Self {
+            evaluator,
+            field: PhantomData,
+            context: PhantomData,
+        }
+    }
+}
+
 #[async_trait]
 impl<C: Context, F: Field, T: OLEeEvaluate<C, F> + Send> M2A<C, F> for M2AEvaluator<C, F, T> {
     async fn convert(

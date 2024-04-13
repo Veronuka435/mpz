@@ -12,6 +12,16 @@ pub struct M2AProvider<C: Context, F: Field, T: OLEeProvide<C, F>> {
     context: PhantomData<C>,
 }
 
+impl<C: Context, F: Field, T: OLEeProvide<C, F>> M2AProvider<C, F, T> {
+    pub fn new(provider: T) -> Self {
+        Self {
+            provider,
+            field: PhantomData,
+            context: PhantomData,
+        }
+    }
+}
+
 #[async_trait]
 impl<C: Context, F: Field, T: OLEeProvide<C, F> + Send> M2A<C, F> for M2AProvider<C, F, T> {
     async fn convert(
