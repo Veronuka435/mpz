@@ -6,7 +6,8 @@ pub use provider::M2AProvider;
 
 #[cfg(test)]
 mod tests {
-    use crate::{M2AEvaluator, M2AProvider, M2A};
+    use crate::m2a::{M2AEvaluator, M2AProvider};
+    use crate::M2A;
     use mpz_common::executor::test_st_executor;
     use mpz_core::{prg::Prg, Block};
     use mpz_fields::{p256::P256, UniformRand};

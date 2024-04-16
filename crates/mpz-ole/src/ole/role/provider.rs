@@ -3,8 +3,7 @@ use async_trait::async_trait;
 use mpz_common::Context;
 use mpz_fields::Field;
 use mpz_ole_core::ole::role::OLEeProvider as OLEeCoreProvider;
-use serde::{de::DeserializeOwned, Serialize};
-use serio::{stream::IoStreamExt, SinkExt};
+use serio::{stream::IoStreamExt, Deserialize, Serialize, SinkExt};
 use std::fmt::Debug;
 
 /// A provider for OLE with errors.
@@ -42,7 +41,7 @@ impl<const N: usize, T, F: Field> OLEeProvider<N, T, F> {
 }
 
 #[async_trait]
-impl<const N: usize, T, F: Field + Serialize + DeserializeOwned, C: Context> OLEeProvide<C, F>
+impl<const N: usize, T, F: Field + Serialize + Deserialize, C: Context> OLEeProvide<C, F>
     for OLEeProvider<N, T, F>
 where
     T: RandomOLEeProvide<C, F> + Send,

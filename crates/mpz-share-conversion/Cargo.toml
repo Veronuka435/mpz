@@ -13,6 +13,10 @@ mpz-common.workspace = true
 
 async-trait.workspace = true
 thiserror.workspace = true
+rand.workspace = true
+enum-try-as-inner.workspace = true
+serde.workspace = true
+serio.workspace = true
 
 [dev-dependencies]
 tokio = { workspace = true, features = [

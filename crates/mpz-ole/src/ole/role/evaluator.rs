@@ -3,8 +3,7 @@ use async_trait::async_trait;
 use mpz_common::Context;
 use mpz_fields::Field;
 use mpz_ole_core::ole::role::OLEeEvaluator as OLEeCoreEvaluator;
-use serde::{de::DeserializeOwned, Serialize};
-use serio::{stream::IoStreamExt, SinkExt};
+use serio::{stream::IoStreamExt, Deserialize, Serialize, SinkExt};
 use std::fmt::Debug;
 
 /// An evaluator for OLE with errors.
@@ -42,7 +41,7 @@ impl<const N: usize, T, F: Field> OLEeEvaluator<N, T, F> {
 }
 
 #[async_trait]
-impl<const N: usize, T, F: Field + Serialize + DeserializeOwned, C: Context> OLEeEvaluate<C, F>
+impl<const N: usize, T, F: Field + Serialize + Deserialize, C: Context> OLEeEvaluate<C, F>
     for OLEeEvaluator<N, T, F>
 where
     T: RandomOLEeEvaluate<C, F> + Send,
