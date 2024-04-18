@@ -8,6 +8,7 @@ use std::{fmt::Debug, marker::PhantomData};
 /// An evaluator which implements multiplicative-to-additive share conversion.
 ///
 /// It takes the role of the function evaluator during OLE.
+#[derive(Clone)]
 pub struct M2AEvaluator<C: Context, F: Field, T: OLEeEvaluate<C, F>> {
     evaluator: T,
     field: PhantomData<F>,

@@ -8,6 +8,7 @@ use std::{fmt::Debug, marker::PhantomData};
 /// A provider which implements multiplicative-to-additive share conversion.
 ///
 /// It takes the role of the function provider during OLE.
+#[derive(Clone)]
 pub struct M2AProvider<C: Context, F: Field, T: OLEeProvide<C, F>> {
     provider: T,
     field: PhantomData<F>,
