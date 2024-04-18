@@ -1,3 +1,21 @@
+//! This module implements the [`M2A`](crate::M2A)-protocol using Oblivious Linear Evaluation (OLE).
+
+//! This module provides a semi-honest implementation of the [`M2A`](crate::M2A)-protocol using
+//! Oblivious Linear Evaluation with errors (OLEe). This protocol guarantees privacy and
+//! correctness for semi-honest adversaries only. In the presence of a malicious adversary neither
+//! correctness nor privacy holds.
+//!
+//! # M2A Protocol
+//! Alice has a share `a` and Bob has a share `b`. They want to end up with shares `x` for Alice
+//! and `y` for Bob such that a * b = x + y holds. They proceed as follows:
+//!
+//! - Alice (OLE provider) and Bob (OLE evaluator) call F_(OLE)(a, b) -> c + d, so it holds that a * b = -c + d.
+//! - Alice returns x = -c.
+//! - Bob returns y = d.
+//!
+//! Now it holds that
+//! a * b = x + y
+
 mod evaluator;
 mod provider;
 
@@ -15,7 +33,7 @@ mod tests {
     use rand::SeedableRng;
 
     #[tokio::test]
-    async fn test_a2m() {
+    async fn test_m2a() {
         let count = 12;
         let from_seed = Prg::from_seed(Block::ZERO);
         let mut rng = from_seed;

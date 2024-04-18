@@ -6,6 +6,9 @@ use mpz_ole::OLEeEvaluate;
 use serio::{stream::IoStreamExt, Deserialize, Serialize};
 use std::marker::PhantomData;
 
+/// An evaluator which implements additive-to-multiplicative share conversion.
+///
+/// It takes the role of the function evaluator during OLE.
 pub struct A2MEvaluator<C: Context, F: Field, T: OLEeEvaluate<C, F>> {
     evaluator: T,
     field: PhantomData<F>,
@@ -13,6 +16,11 @@ pub struct A2MEvaluator<C: Context, F: Field, T: OLEeEvaluate<C, F>> {
 }
 
 impl<C: Context, F: Field, T: OLEeEvaluate<C, F>> A2MEvaluator<C, F, T> {
+    /// Creates a new [`A2M`] evaluator.
+    ///
+    /// # Arguments
+    ///
+    /// * `evaluator` - An evaluator which implements [`OLEeEvaluate`].
     pub fn new(evaluator: T) -> Self {
         Self {
             evaluator,
@@ -26,12 +34,8 @@ impl<C: Context, F: Field, T: OLEeEvaluate<C, F>> A2MEvaluator<C, F, T> {
 impl<C: Context, F: Field + Serialize + Deserialize, T: OLEeEvaluate<C, F> + Send> A2M<C, F>
     for A2MEvaluator<C, F, T>
 {
-    async fn convert(
-        &mut self,
-        ctx: &mut C,
-        shares: Vec<F>,
-    ) -> Result<Vec<F>, ShareConversionError> {
-        let yk = self.evaluator.evaluate(ctx, shares).await?;
+    async fn convert(&mut self, ctx: &mut C, yk: Vec<F>) -> Result<Vec<F>, ShareConversionError> {
+        let dk = self.evaluator.evaluate(ctx, yk).await?;
 
         let channel = ctx.io_mut();
         let mk: Vec<F> = channel
@@ -40,7 +44,7 @@ impl<C: Context, F: Field + Serialize + Deserialize, T: OLEeEvaluate<C, F> + Sen
             .try_into_message()
             .map_err(|err| ShareConversionError::Message(Box::new(err)))?;
 
-        let out = yk.iter().zip(mk).map(|(y, m)| *y + m).collect();
+        let out = mk.iter().zip(dk).map(|(m, d)| *m + d).collect();
         Ok(out)
     }
 }

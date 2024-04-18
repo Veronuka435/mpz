@@ -1,3 +1,22 @@
+//! This module provides a semi-honest implementation of the [`A2M`](crate::A2M)-protocol using
+//! Oblivious Linear Evaluation with errors (OLEe). This protocol guarantees privacy and
+//! correctness for semi-honest adversaries only. In the presence of a malicious adversary neither
+//! correctness nor privacy holds.
+//!
+//! # A2M Protocol
+//! Alice has a share `x` and Bob has a share `y`. They want to end up with shares `a` for Alice
+//! and `b` for Bob such that x + y = a * b holds. They proceed as follows:
+//!
+//! - Alice samples a random field element `a`.
+//! - Alice (OLE provider) and Bob (OLE evaluator) call F_(OLE)(a^(-1), y) -> c + d, so it holds
+//!   that a^(-1) * y = -c + d.
+//! - Alice sends m = a^(-1) * x - c to Bob.
+//! - Alice returns a.
+//! - Bob returns b = m + d = a^(-1) * x - c + d = a^(-1) * x + a^(-1) * y = a^(-1) * (x + y)
+//!
+//! Now it holds that
+//! a * b = a * a(-1) * (x + y) = x + y
+
 mod evaluator;
 mod msg;
 mod provider;
