@@ -12,7 +12,6 @@ members = [
     # "mpz-garble",
     "mpz-garble-core",
     "mpz-share-conversion",
-    "mpz-share-conversion-core",
     "matrix-transpose",
     "clmul",
     "mpz-ole",

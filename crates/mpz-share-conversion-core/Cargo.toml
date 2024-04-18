@@ -1,9 +1,0 @@
-[package]
-name = "mpz-share-conversion-core"
-version = "0.1.0"
-edition = "2021"
-
-[lib]
-name = "mpz_share_conversion_core"
-
-[dependencies]
