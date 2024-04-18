@@ -3,7 +3,7 @@ use async_trait::async_trait;
 use mpz_common::Context;
 use mpz_fields::Field;
 use mpz_ole::OLEeProvide;
-use std::marker::PhantomData;
+use std::{fmt::Debug, marker::PhantomData};
 
 /// A provider which implements multiplicative-to-additive share conversion.
 ///
@@ -26,6 +26,12 @@ impl<C: Context, F: Field, T: OLEeProvide<C, F>> M2AProvider<C, F, T> {
             field: PhantomData,
             context: PhantomData,
         }
+    }
+}
+
+impl<C: Context, F: Field, T: OLEeProvide<C, F>> Debug for M2AProvider<C, F, T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{{ M2AProvider }}")
     }
 }
 

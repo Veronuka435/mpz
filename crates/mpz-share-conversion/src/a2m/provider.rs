@@ -5,7 +5,7 @@ use mpz_fields::Field;
 use mpz_ole::OLEeProvide;
 use rand::thread_rng;
 use serio::{sink::SinkExt, Serialize};
-use std::marker::PhantomData;
+use std::{fmt::Debug, marker::PhantomData};
 
 /// A provider which implements additive-to-multiplicative share conversion.
 ///
@@ -28,6 +28,12 @@ impl<C: Context, F: Field, T: OLEeProvide<C, F>> A2MProvider<C, F, T> {
             field: PhantomData,
             context: PhantomData,
         }
+    }
+}
+
+impl<C: Context, F: Field, T: OLEeProvide<C, F>> Debug for A2MProvider<C, F, T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{{ A2MProvider }}")
     }
 }
 

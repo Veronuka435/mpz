@@ -4,7 +4,7 @@ use mpz_common::Context;
 use mpz_fields::Field;
 use mpz_ole::OLEeEvaluate;
 use serio::{stream::IoStreamExt, Deserialize, Serialize};
-use std::marker::PhantomData;
+use std::{fmt::Debug, marker::PhantomData};
 
 /// An evaluator which implements additive-to-multiplicative share conversion.
 ///
@@ -27,6 +27,12 @@ impl<C: Context, F: Field, T: OLEeEvaluate<C, F>> A2MEvaluator<C, F, T> {
             field: PhantomData,
             context: PhantomData,
         }
+    }
+}
+
+impl<C: Context, F: Field, T: OLEeEvaluate<C, F>> Debug for A2MEvaluator<C, F, T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{{ A2MEvaluator }}")
     }
 }
 
